@@ -43,20 +43,28 @@ export default {
       comment: '',
       image: null,
       content: false,
+      URLImage: ''
     }
   },
   methods: {
     onFileSelected(event) {
-      this.image = event.target.files[0]
-      console.log(this.image)
+      this.image = event.target.files[0];
 
-      let storageImage = fb.storage().ref('images/' + this.image.name)
-      storageImage.put(this.image).catch((e) => console.log(e))
+      let storageImage = fb.storage().ref('images/' + this.image.name);
+      let uploadTask = storageImage.put(this.image);
 
-      console.log(this.image.name)
-    },
-    mojalert() {
-      console.log(this.firstName)
+      uploadTask.on('state_changed', (snapshot) => {
+        console.log(snapshot)
+      },(error) => {
+        console.log(error)
+      },() => {
+        uploadTask.snapshot.ref
+          .getDownloadURL()
+          .then((downloadURL) => {
+            this.URLImage = downloadURL;
+            console.log('PARADAAAAA: ', this.URLImage);
+          })
+      });
     },
     addDataToFirestore() {
       console.log(this.computedData)
@@ -78,7 +86,8 @@ export default {
         address: this.address,
         comment: this.comment,
         date: new Date(),
-        content: this.content
+        content: this.content,
+        URLImage: this.URLImage
       }
     }
   }

@@ -10,6 +10,11 @@
         <p v-show="comment.content" class="date">{{ comment.formatedDate }}</p>
         <h5>{{ comment.firstName }} {{ comment.lastName }} </h5>
         <p>{{ comment.address }}</p>
+        <img :src="comment.URLImage" 
+            width="100px" 
+            alt="?"
+            v-if="comment.URLImage"
+        >
         <p v-show="comment.content">{{ comment.comment }}</p>
       </div>
     </div>
