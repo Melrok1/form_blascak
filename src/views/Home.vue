@@ -2,7 +2,7 @@
   <div class="home">
     <p>Home</p>
     <p>{{ firstName }}</p>
-                              
+    
     <form class="card inputForm" @submit.prevent="addDataToFirestore">
       <div class="name">
         <label for="inputName">Meno:</label>
