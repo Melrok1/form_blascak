@@ -1,18 +1,16 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <!-- <p>Meno</p>
-    <p>{{ listOfComments }}</p> -->
     <div class="messageContainer">
       <div class="card" 
         v-for="comment in listOfComments.slice().reverse()" 
         :key="comment.id"
-        @click="commentToggle"
+        @click="comment.content = !comment.content"
         >
         <p class="date">{{ comment.formatedDate }}</p>
         <h5>{{ comment.firstName }} {{ comment.lastName }} </h5>
         <p>{{ comment.address }}</p>
-        <p v-if="showFullComment">{{ comment.comment }}</p>
+        <p v-show="comment.content">{{ comment.comment }}</p>
       </div>
     </div>
   </div>
@@ -20,7 +18,7 @@
 
 
 <script>
-import firestore from '@/firebase/init.js'
+import {db} from '@/firebase/init.js'
 
 export default {
   data() {
@@ -31,12 +29,13 @@ export default {
     }
   },
   methods: {
-    commentToggle() {
-      this.showFullComment = !this.showFullComment
-    }
+
+  },
+  computed: {
+
   },
   created() {
-    firestore.collection('message').get()
+    db.collection('message').get()
     .then(snapshot => {snapshot.forEach(doc => {
       let singleList = doc.data();
       let timeStamp = doc.data().date.seconds * 1000;

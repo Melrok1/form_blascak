@@ -22,7 +22,7 @@
       </div>
       <div class="picture">
         <label for="inputPicture">Obrázok:</label>
-        <input type="file" name="inputPicture">
+        <input type="file" name="inputPicture" @change="onFileSelected" accept="image/*">
       </div>
 
       <button class="waves-effect waves-light btn">Odoslať</button>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import firestore from '@/firebase/init.js'
+import {fb, db} from '@/firebase/init.js'
 
 export default {
   name: 'Home',
@@ -42,24 +42,32 @@ export default {
       lastName: '',
       address: '',
       comment: '',
-      picture: null,
+      image: null,
+      content: false,
     }
   },
   methods: {
+    onFileSelected(event) {
+      this.image = event.target.files[0]
+      console.log(this.image)
+
+      let storageImage = fb.storage().ref('images/')
+
+      console.log(storageImage)
+    },
     mojalert() {
       console.log(this.firstName)
     },
     addDataToFirestore() {
       console.log(this.computedData)
-      firestore.collection('message')
-                .doc(Number(this.computedData.date).toString())
-                .set(this.computedData)
-                .then(() => {
-                  console.log('ok')
-                  console.log(Number(this.computedData.date).toString())
-                })
-                .catch((err) => console.log(err))
-      // firestore.collection('message')
+      db.collection('message')
+        .doc(Number(this.computedData.date).toString())
+        .set(this.computedData)
+        .then(() => {
+          console.log('ok')
+          console.log(Number(this.computedData.date).toString())
+        })
+        .catch((err) => console.log(err))
     },
   },
   computed: {
@@ -69,7 +77,8 @@ export default {
         lastName: this.lastName,
         address: this.address,
         comment: this.comment,
-        date: new Date()
+        date: new Date(),
+        content: this.content
       }
     }
   }
