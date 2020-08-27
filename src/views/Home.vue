@@ -21,7 +21,11 @@
       </div>
       <div class="picture">
         <label for="inputPicture">Obrázok:</label>
-        <input type="file" name="inputPicture" @change="onFileSelected" accept="image/*">
+        <input 
+          type="file" 
+          name="inputPicture" 
+          @change="onFileSelected" 
+          accept="image/*">
       </div>
 
       <button class="waves-effect waves-light btn">Odoslať</button>
@@ -62,12 +66,12 @@ export default {
           .getDownloadURL()
           .then((downloadURL) => {
             this.URLImage = downloadURL;
-            console.log('PARADAAAAA: ', this.URLImage);
+            console.log('image url: ', this.URLImage);
           })
       });
     },
     addDataToFirestore() {
-      console.log(this.computedData)
+      // console.log(this.computedData)
       db.collection('message')
         .doc(Number(this.computedData.date).toString())
         .set(this.computedData)

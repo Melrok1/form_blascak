@@ -2,21 +2,26 @@
   <div class="about">
     <h4>Zoznam podnetov:</h4>
     <div class="messageContainer">
-      <div class="card" 
+
+      <div 
+        class="card" 
         v-for="comment in listOfComments.slice().reverse()" 
         :key="comment.id"
-        @click="comment.content = !comment.content"
-        >
+        @click="comment.content = !comment.content">
+
         <p v-show="comment.content" class="date">{{ comment.formatedDate }}</p>
         <h5>{{ comment.firstName }} {{ comment.lastName }} </h5>
         <p>{{ comment.address }}</p>
+
         <img :src="comment.URLImage" 
             width="100px" 
             alt="?"
-            v-if="comment.URLImage"
-        >
+            v-if="comment.URLImage">
+            
         <p v-show="comment.content">{{ comment.comment }}</p>
+
       </div>
+
     </div>
   </div>
 </template>
