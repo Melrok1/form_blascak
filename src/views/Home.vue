@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <p>Home</p>
-    <p>{{ firstName }}</p>
+    <h4>Podanie podnetu:</h4>
     
     <form class="card inputForm" @submit.prevent="addDataToFirestore">
       <div class="name">
@@ -51,9 +50,10 @@ export default {
       this.image = event.target.files[0]
       console.log(this.image)
 
-      let storageImage = fb.storage().ref('images/')
+      let storageImage = fb.storage().ref('images/' + this.image.name)
+      storageImage.put(this.image).catch((e) => console.log(e))
 
-      console.log(storageImage)
+      console.log(this.image.name)
     },
     mojalert() {
       console.log(this.firstName)
