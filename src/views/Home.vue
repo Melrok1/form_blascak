@@ -123,4 +123,22 @@ export default {
   display: block;
 }
 
+@media only screen and (max-width: 850px) {
+  .inputForm {
+    width: 70%;
+    margin: 0 auto;
+    padding: 1rem 3rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .inputForm {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+  }
+}
+
+
+
 </style>
